@@ -1,18 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { postLogin } from "../services/trackitApi";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { postSignUp } from "../services/trackitApi";
 import { ThreeDots } from  'react-loader-spinner'
 import styled from "styled-components";
 import logo from "../assets/img/logo.png";
-import UserContext from "../contexts/UserContext";
 
-export default function LoginScreen() {
-    const navigate = useNavigate();
-    const { token, setToken} = useContext(UserContext);
-    const { userIcon, setUserIcon } = useContext(UserContext);
+export default function SignUp() {
     const [disabled, setDisabled] = useState(false);
     const [form, setForm] = useState({
         email: "",
+        name: "", 
+        image: "", 
         password: ""
     });
 
@@ -21,28 +19,25 @@ export default function LoginScreen() {
             ...form, 
             [event.target.name]: event.target.value
         });
+        
     }
 
-    function logIn(event) {
+    function signUp(event) {
         event.preventDefault();
         
         setDisabled(true);
 
-        postLogin(form)
-            .then(resp => {
-                console.log(resp.data);
-                setDisabled(false);
-                setToken(resp.data.token);
-                setUserIcon(resp.data.image);
-                navigate("/hoje");
-            })
-            .catch(resp => {
-                setDisabled(false);
-                setTimeout(() => {alert(resp.response.data.message)}, 0);
-            });
-    }
+        postSignUp(form).then(resp => {
+            console.log(resp.data);
+            console.log(form);
+            setDisabled(false);
+        })
 
-    useNavigate("/hoje");
+        postSignUp(form).catch(resp => {
+            setDisabled(false);
+            setTimeout(() => {alert(resp.response.data.message)}, 0);
+        })
+    }
 
     return (
         <Container>
@@ -52,12 +47,14 @@ export default function LoginScreen() {
             </div>
 
             <Form>
-                <form onSubmit={logIn}>
+                <form onSubmit={signUp}>
                     <input type="email" name="email" value={form.email} placeholder="email" onChange={handleForm} disabled={disabled} required />
                     <input type="password" name="password" value={form.password} placeholder="senha" onChange={handleForm} disabled={disabled} required />
-
+                    <input type="text" name="name" value={form.name} placeholder="nome" onChange={handleForm} disabled={false} required />
+                    <input type="url" name="image" value={form.url} placeholder="foto" onChange={handleForm} disabled={false} required />
+                    
                     {disabled === false ? (
-                        <Button type="submit" disabled={disabled}>Entrar</Button>
+                        <Button type="submit" disabled={disabled}>Cadastrar</Button>
                         ) : (
                         <Button type="submit" disabled={disabled}>
                             <div>
@@ -66,8 +63,8 @@ export default function LoginScreen() {
                         </Button>
                     )}
 
-                    <Link to={"/cadastro"}>
-                        <p>Não tem uma conta? Cadastre-se!</p>
+                    <Link to={"/"}>
+                        <p>Já tem uma conta? Faça login!</p>
                     </Link>
                 </form>
             </Form>
@@ -119,6 +116,18 @@ const Form = styled.div`
 
     input:focus {
         outline: 1px solid rgba(0, 0, 0, 0.4);
+    }
+
+    button {
+        background-color: #52B6FF;
+        color: #FFF;
+        font-size: 21px;
+        width: 303px;
+        height: 45px;
+        margin-bottom: 25px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
     }
 
     p {
