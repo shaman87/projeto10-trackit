@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import styled from 'styled-components';
 import 'react-circular-progressbar/dist/styles.css';
@@ -7,27 +8,34 @@ export default function Menu() {
 
     return (
         <Container>
-            <h3>Hábitos</h3>
+            <Link to={"/habitos"}>
+                <h3>Hábitos</h3>
+            </Link>
+
             <div>
-                <CircularProgressbar 
-                    value={percentage} 
-                    text={"Hoje"} 
-                    background={true} 
-                    backgroundPadding={7} 
-                    styles={buildStyles({
-                        backgroundColor: "#52B6FF", 
-                        textColor: "#FFFFFF", 
-                        trailColor: "#52B6FF", 
-                        pathColor: "#FFFFFF"
-                    })} 
-                />
+                <Link to={"/hoje"}>
+                    <CircularProgressbar 
+                        value={percentage} 
+                        text={"Hoje"} 
+                        background={true} 
+                        backgroundPadding={7} 
+                        styles={buildStyles({
+                            backgroundColor: "#52B6FF", 
+                            textColor: "#FFFFFF", 
+                            trailColor: "#52B6FF", 
+                            pathColor: "#FFFFFF"
+                        })} 
+                    />
+                </Link>
             </div>
+
             <h3>Histórico</h3>
         </Container>
     );
 }
 
 const Container = styled.div`
+    background-color: #FFFFFF;
     color: #52B6FF;
     font-size: 18px;
     display: flex;
@@ -44,5 +52,15 @@ const Container = styled.div`
         width: 100px;
         height: 100px;
         padding-bottom: 150px;
+        cursor: pointer;
+    }
+
+    h3 {
+        color: #52B6FF;
+        cursor: pointer;
+    }
+
+    a {
+        text-decoration: none;
     }
 `;

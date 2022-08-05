@@ -12,4 +12,14 @@ function postSignUp(body) {
     return promise;
 }
 
-export { postLogin, postSignUp };
+function getHabits(header) {
+    const promise = axios.get(`${BASE_URL}/habits`, header);
+    return promise;
+}
+
+function getTodayHabits(header) {
+    const promise = axios.get(`${BASE_URL}/habits/today`, header);
+    return promise;
+}
+
+export { postLogin, postSignUp, getTodayHabits, getHabits };

@@ -32,7 +32,7 @@ export default function LoginScreen() {
             .then(resp => {
                 console.log(resp.data);
                 setDisabled(false);
-                setToken(resp.data.token);
+                //setToken(resp.data.token);
                 setUserIcon(resp.data.image);
                 navigate("/hoje");
             })
@@ -76,10 +76,11 @@ export default function LoginScreen() {
 }
 
 const Container = styled.div`
+    background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    height: 100vh;
     padding: 36px;
     margin: 0 auto;
 

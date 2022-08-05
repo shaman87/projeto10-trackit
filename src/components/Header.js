@@ -5,7 +5,7 @@ export default function Header({ userIcon }) {
         <Container>
             <h2>TrackIt</h2>
             <div>
-                <img src="https://i.pinimg.com/originals/f3/79/9f/f3799fb3ba7632b83f4cd7cf0c7281b6.jpg" alt="User Icon" />
+                <img src={"https://i.pinimg.com/originals/f3/79/9f/f3799fb3ba7632b83f4cd7cf0c7281b6.jpg"} alt="User Icon" />
             </div>
         </Container>
     );

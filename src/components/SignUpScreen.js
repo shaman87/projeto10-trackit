@@ -73,10 +73,11 @@ export default function SignUp() {
 }
 
 const Container = styled.div`
+    background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    height: 100vh;
     padding: 36px;
     margin: 0 auto;
 
