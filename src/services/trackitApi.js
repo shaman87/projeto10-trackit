@@ -17,9 +17,19 @@ function getHabits(header) {
     return promise;
 }
 
+function postHabits(body, header) {
+    const promise = axios.post(`${BASE_URL}/habits`, body, header);
+    return promise;
+}
+
+function deleteHabits(id, header) {
+    const promise = axios.delete(`${BASE_URL}/habits/${id}`, header);
+    return promise;
+}
+
 function getTodayHabits(header) {
     const promise = axios.get(`${BASE_URL}/habits/today`, header);
     return promise;
 }
 
-export { postLogin, postSignUp, getTodayHabits, getHabits };
+export { postLogin, postSignUp, getTodayHabits, getHabits, postHabits, deleteHabits };

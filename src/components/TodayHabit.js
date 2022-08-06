@@ -28,8 +28,8 @@ const Habit = styled.div`
     color: #666666;
     display: flex;
     justify-content: space-between;
-    height: 94px;
-    padding: 13px;
+    align-items: center;
+    padding: 13px 13px 0 13px;
     border-radius: 5px;
     cursor: pointer;
 

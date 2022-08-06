@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { postLogin } from "../services/trackitApi";
-import { ThreeDots } from  'react-loader-spinner'
+import { ThreeDots } from  'react-loader-spinner';
+
 import styled from "styled-components";
 import logo from "../assets/img/logo.png";
 import UserContext from "../contexts/UserContext";

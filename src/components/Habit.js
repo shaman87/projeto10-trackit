@@ -1,30 +1,42 @@
-import styled from "styled-components";
+import { deleteHabits } from "../services/trackitApi";
+import { useContext } from "react";
 
-export default function Habit({ habitId, habitName, habitDays }) {
-    alert("oi");
-    let chosenDays = [false, false, false, false, false, false, false];
-    chosenDays = habitDays.map((day, index) => {
-        if(typeof habitDays[index] === "number") {
-            return true;
+import styled from "styled-components";
+import UserContext from "../contexts/UserContext";
+
+export default function Habit({ habitId, habitName, habitDays, selectedWeekDays, setSelectedWeekDays }) {
+    const { token } = useContext(UserContext);
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token}`
         }
-    });
-    console.log(chosenDays);
+    };
+
+    function deleteHabitCard() {
+        if (window.confirm("Deseja realmente exlcuir o hábito da lista?")) {
+            deleteHabits(habitId, config)
+                .then(() => {
+                    alert("Hábito excluído da lista");
+                    setSelectedWeekDays([]);
+                })
+        }
+    }
 
     return (
         <HabitCard>
             <div>
                 <h2>{habitName}</h2>
                 <div>
-                    <button>D</button>
-                    <button>S</button>
-                    <button>T</button>
-                    <button>Q</button>
-                    <button>Q</button>
-                    <button>S</button>
-                    <button>S</button>
+                    {habitDays.includes(7) ? (<button className="selected">D</button>) : (<button>D</button>)}
+                    {habitDays.includes(1) ? (<button className="selected">S</button>) : (<button>S</button>)}
+                    {habitDays.includes(2) ? (<button className="selected">T</button>) : (<button>T</button>)}
+                    {habitDays.includes(3) ? (<button className="selected">Q</button>) : (<button>Q</button>)}
+                    {habitDays.includes(4) ? (<button className="selected">Q</button>) : (<button>Q</button>)}
+                    {habitDays.includes(5) ? (<button className="selected">S</button>) : (<button>S</button>)}
+                    {habitDays.includes(6) ? (<button className="selected">S</button>) : (<button>S</button>)}
                 </div>
             </div>
-            <ion-icon name="trash-outline"></ion-icon>
+            <ion-icon name="trash-outline" onClick={() => deleteHabitCard()} ></ion-icon>
         </HabitCard>
     );
 }
@@ -36,6 +48,7 @@ const HabitCard = styled.div`
     justify-content: space-between;
     height: 91px;
     padding: 13px;
+    margin-bottom: 10px;
     border-radius: 5px;
     
     div h2 {
@@ -53,11 +66,15 @@ const HabitCard = styled.div`
         margin-right: 5px;
         border: 1px solid #D5D5D5;
         border-radius: 5px;
-        cursor: pointer;
     }
 
     ion-icon {
         font-size: 20px;
         cursor: pointer;
+    }
+
+    .selected {
+        background-color: #CFCFCF;
+        color: #FFFFFF;
     }
 `;
