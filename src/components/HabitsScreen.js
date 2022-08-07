@@ -13,11 +13,12 @@ export default function HabitsScreen() {
     const { token, setToken } = useContext(UserContext);
     const { userIcon, setUserIcon } = useContext(UserContext);
     const { habitsList, setHabitsList } = useContext(UserContext);
+    const { reload, setReload } = useContext(UserContext);
     const [disabled, setDisabled] = useState(false);
     const [showForm, setShowForm] = useState("hidden");
     const [selectedWeekDays, setSelectedWeekDays] = useState([]);
-    const [weekdays, setWeekdays] = useState([7, 1, 2, 3, 4, 5, 6]);
-
+    const [weekdays, setWeekdays] = useState([0, 1, 2, 3, 4, 5, 6]);
+    
     const [form, setForm] = useState({
         name: "",
         days: selectedWeekDays
@@ -28,15 +29,14 @@ export default function HabitsScreen() {
             "Authorization": `Bearer ${token}`
         }
     };
-
+    
     useEffect(() => {
         getHabits(config)
             .then(resp => {
-                console.log(token);
                 console.log(resp.data);
                 setHabitsList(resp.data);
             });
-    }, [selectedWeekDays]);
+    }, [reload]);
 
     function handleForm(event) {
         setForm({
@@ -57,11 +57,12 @@ export default function HabitsScreen() {
                     setShowForm("hidden");
                     setSelectedWeekDays([]);
                     setWeekdays([]);
-                    setWeekdays([7, 1, 2, 3, 4, 5, 6]);
+                    setWeekdays([0, 1, 2, 3, 4, 5, 6]);
                     setForm({
                         name: "", 
                         days: selectedWeekDays 
                     });
+                    setReload(!reload);
                 })
                 .catch(resp => {
                     console.log(resp);
@@ -76,7 +77,7 @@ export default function HabitsScreen() {
     
     return (
         <>
-            <Header userIcon={userIcon} />
+            <Header />
 
             <HabitsList>
                 <HabitsHeader>

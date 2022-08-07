@@ -8,16 +8,22 @@ import LoginScreen from "./components/LoginScreen";
 import SignUpScreen from "./components/SignUpScreen";
 import HabitsScreen from "./components/HabitsScreen";
 import TodayScreen from "./components/TodayScreen";
+import Header from "./components/Header";
+import Menu from "./components/Menu";
 
 export default function App() {
-    const [token, setToken] = useState("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDU1NiwiaWF0IjoxNjU5NjM4NDAwfQ.seHEmJfmwwj18Pp5R8HoC1dCsL-PRCLrLpcTGA9b4Cw");
+    const [reload, setReload] = useState(false);
+    const [token, setToken] = useState("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDU1NiwiaWF0IjoxNjU5ODQ2ODgyfQ.kfPIi294qkfQQppkX7UKB_q7n8pSyuWxIF41HQzqIvM");
     const [userIcon, setUserIcon] = useState("");
+    const [todayHabitsCounter, setTodayHabitsCounter] = useState([]);
     const [habitsList, setHabitsList] = useState([]);
     const [todayHabitsList, setTodayHabitsList] = useState([]);
-
+    
     return (
         <>
             <UserContext.Provider value={{ 
+                reload, 
+                setReload, 
                 token, 
                 setToken, 
                 userIcon, 
@@ -26,15 +32,19 @@ export default function App() {
                 setHabitsList, 
                 todayHabitsList, 
                 setTodayHabitsList, 
+                todayHabitsCounter, 
+                setTodayHabitsCounter, 
             }}>
                 <GlobalStyle />
                 <BrowserRouter>
+                    <Header />
                     <Routes>
                         <Route path="/" element={<LoginScreen />} />
                         <Route path="/cadastro" element={<SignUpScreen />} />
                         <Route path="/habitos" element={<HabitsScreen />} />
                         <Route path="/hoje" element={<TodayScreen />} />
                     </Routes>
+                    <Menu />
                 </BrowserRouter>
             </UserContext.Provider>
         </>

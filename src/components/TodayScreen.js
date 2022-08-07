@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getTodayHabits } from "../services/trackitApi";
 
 import styled from "styled-components";
@@ -8,11 +8,13 @@ import TodayHabit from "./TodayHabit";
 import Menu from "./Menu";
 import dayjs from 'dayjs';
 
-export default function Today() {
+export default function TodayScreen() {
     const dayjs = require('dayjs');
     const { token, setToken } = useContext(UserContext);
+    const { todayHabitsCounter, setTodayHabitsCounter } = useContext(UserContext);
     const { userIcon, setUserIcon } = useContext(UserContext);
     const { todayHabitsList, setTodayHabitsList } = useContext(UserContext);
+    const { reload, setReload } = useContext(UserContext);
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -31,19 +33,30 @@ export default function Today() {
     useEffect(() => {
         getTodayHabits(config)
             .then(resp => {
-                console.log(token);
                 setTodayHabitsList(resp.data);
-                console.log(resp.data);
             });
-    }, []);
-        
+    }, [reload]);
+
+    const habitsCheckedList = todayHabitsList.filter(check => {
+        if(check.done === true) {
+            return true;
+        }
+    });
+
+    const habitsChecked = habitsCheckedList.length;
+    const percentage = Math.round((habitsCheckedList.length / todayHabitsList.length) * 100);
+
     return (
         <>
             <Header userIcon={userIcon} />
             <TodayContent>
                 <div>
                     <h2>{dayjs().format("dddd, DD/MM")}</h2>
-                    <h3>Nenhum hábito concluído ainda</h3>
+                    {habitsChecked === 0 ? (
+                        <H3 checked={habitsChecked}>Nenhum hábito concluído ainda</H3>
+                    ) : (
+                        <H3 checked={habitsChecked}>{percentage}% dos hábitos concluídos</H3>
+                    )}
                 </div>
 
                 <div>
@@ -73,13 +86,13 @@ const TodayContent = styled.div`
         padding-bottom: 7px;
     }
 
-    h3 {
-        color: #BABABA;
-        font-size: 18px;
-        margin-bottom: 30px;
-    }
-
     div {
         margin-bottom: 10px;
     }
+`;
+
+const H3 = styled.h3`
+    color: ${props => props.checked === 0 ? "#BABABA" : "#8FC549"};
+    font-size: 18px;
+    margin-bottom: 30px;
 `;

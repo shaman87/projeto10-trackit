@@ -32,4 +32,14 @@ function getTodayHabits(header) {
     return promise;
 }
 
-export { postLogin, postSignUp, getTodayHabits, getHabits, postHabits, deleteHabits };
+function postTodayHabitsCheck(id, header) {
+    const promise = axios.post(`${BASE_URL}/habits/${id}/check`, {}, header);
+    return promise;
+}
+
+function postTodayHabitsUncheck(id, header) {
+    const promise = axios.post(`${BASE_URL}/habits/${id}/uncheck`, {}, header);
+    return promise;
+}
+
+export { postLogin, postSignUp, getTodayHabits, getHabits, postHabits, deleteHabits, postTodayHabitsCheck, postTodayHabitsUncheck };

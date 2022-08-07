@@ -2,9 +2,19 @@ import { Link } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import styled from 'styled-components';
 import 'react-circular-progressbar/dist/styles.css';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 
 export default function Menu() {
-    const percentage = 66;
+    const { todayHabitsList } = useContext(UserContext);
+
+    const habitsChecked = todayHabitsList.filter(check => {
+        if(check.done === true) {
+            return true;
+        }
+    });
+
+    const percentage = (habitsChecked.length / todayHabitsList.length) * 100;
 
     return (
         <Container>

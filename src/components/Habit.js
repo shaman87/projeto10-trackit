@@ -5,6 +5,7 @@ import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 
 export default function Habit({ habitId, habitName, habitDays, selectedWeekDays, setSelectedWeekDays }) {
+    const { reload, setReload } = useContext(UserContext);
     const { token } = useContext(UserContext);
     const config = {
         headers: {
@@ -13,12 +14,13 @@ export default function Habit({ habitId, habitName, habitDays, selectedWeekDays,
     };
 
     function deleteHabitCard() {
-        if (window.confirm("Deseja realmente exlcuir o hábito da lista?")) {
+        if(window.confirm("Deseja realmente exlcuir o hábito da lista?")) {
             deleteHabits(habitId, config)
                 .then(() => {
                     alert("Hábito excluído da lista");
                     setSelectedWeekDays([]);
-                })
+                    setReload(!reload);
+                });
         }
     }
 
@@ -27,7 +29,7 @@ export default function Habit({ habitId, habitName, habitDays, selectedWeekDays,
             <div>
                 <h2>{habitName}</h2>
                 <div>
-                    {habitDays.includes(7) ? (<button className="selected">D</button>) : (<button>D</button>)}
+                    {habitDays.includes(0) ? (<button className="selected">D</button>) : (<button>D</button>)}
                     {habitDays.includes(1) ? (<button className="selected">S</button>) : (<button>S</button>)}
                     {habitDays.includes(2) ? (<button className="selected">T</button>) : (<button>T</button>)}
                     {habitDays.includes(3) ? (<button className="selected">Q</button>) : (<button>Q</button>)}
@@ -36,7 +38,7 @@ export default function Habit({ habitId, habitName, habitDays, selectedWeekDays,
                     {habitDays.includes(6) ? (<button className="selected">S</button>) : (<button>S</button>)}
                 </div>
             </div>
-            <ion-icon name="trash-outline" onClick={() => deleteHabitCard()} ></ion-icon>
+            <ion-icon name="trash-outline" onClick={deleteHabitCard} ></ion-icon>
         </HabitCard>
     );
 }

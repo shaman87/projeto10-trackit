@@ -32,26 +32,26 @@ export default function WeekDayButton({ day, form, setForm, selectedWeekDays, se
 
     return (
         <>
-            {day === 7 ? (
-                <div className={selected} onClick={() => selectDay()}>D</div>
+            {day === 0 ? (
+                <div className={selected} onClick={selectDay}>D</div>
             ) : ("")}
             {day === 1 ? (
-                <div className={selected} onClick={() => selectDay()}>S</div>
+                <div className={selected} onClick={selectDay}>S</div>
             ) : ("")}
             {day === 2 ? (
-                <div className={selected} onClick={() => selectDay()}>T</div>
+                <div className={selected} onClick={selectDay}>T</div>
             ) : ("")}
             {day === 3 ? (
-                <div className={selected} onClick={() => selectDay()}>Q</div>
+                <div className={selected} onClick={selectDay}>Q</div>
             ) : ("")}
             {day === 4 ? (
-                <div className={selected} onClick={() => selectDay()}>Q</div>
+                <div className={selected} onClick={selectDay}>Q</div>
             ) : ("")}
             {day === 5 ? (
-                <div className={selected} onClick={() => selectDay()}>S</div>
+                <div className={selected} onClick={selectDay}>S</div>
             ) : ("")}
             {day === 6 ? (
-                <div className={selected} onClick={() => selectDay()}>S</div>
+                <div className={selected} onClick={selectDay}>S</div>
             ) : ("")}
         </>
     );
