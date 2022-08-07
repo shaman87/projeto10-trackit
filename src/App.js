@@ -8,6 +8,7 @@ import LoginScreen from "./components/LoginScreen";
 import SignUpScreen from "./components/SignUpScreen";
 import HabitsScreen from "./components/HabitsScreen";
 import TodayScreen from "./components/TodayScreen";
+import HistoryScreen from "./components/HistoryScreen";
 import Header from "./components/Header";
 import Menu from "./components/Menu";
 
@@ -15,7 +16,6 @@ export default function App() {
     const [reload, setReload] = useState(false);
     const [token, setToken] = useState("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDU1NiwiaWF0IjoxNjU5ODQ2ODgyfQ.kfPIi294qkfQQppkX7UKB_q7n8pSyuWxIF41HQzqIvM");
     const [userIcon, setUserIcon] = useState("");
-    const [todayHabitsCounter, setTodayHabitsCounter] = useState([]);
     const [habitsList, setHabitsList] = useState([]);
     const [todayHabitsList, setTodayHabitsList] = useState([]);
     
@@ -31,9 +31,7 @@ export default function App() {
                 habitsList, 
                 setHabitsList, 
                 todayHabitsList, 
-                setTodayHabitsList, 
-                todayHabitsCounter, 
-                setTodayHabitsCounter, 
+                setTodayHabitsList 
             }}>
                 <GlobalStyle />
                 <BrowserRouter>
@@ -43,6 +41,7 @@ export default function App() {
                         <Route path="/cadastro" element={<SignUpScreen />} />
                         <Route path="/habitos" element={<HabitsScreen />} />
                         <Route path="/hoje" element={<TodayScreen />} />
+                        <Route path="/historico" element={<HistoryScreen />} />
                     </Routes>
                     <Menu />
                 </BrowserRouter>

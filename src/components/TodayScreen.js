@@ -11,10 +11,10 @@ import dayjs from 'dayjs';
 export default function TodayScreen() {
     const dayjs = require('dayjs');
     const { token, setToken } = useContext(UserContext);
-    const { todayHabitsCounter, setTodayHabitsCounter } = useContext(UserContext);
     const { userIcon, setUserIcon } = useContext(UserContext);
     const { todayHabitsList, setTodayHabitsList } = useContext(UserContext);
     const { reload, setReload } = useContext(UserContext);
+    
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -66,6 +66,7 @@ export default function TodayScreen() {
                             habitId={habit.id} 
                             habitName={habit.name} 
                             habitDone={habit.done} 
+                            habitsChecked={habitsChecked} 
                             habitCurrentSequence={habit.currentSequence} 
                             habitHighestSequence={habit.highestSequence} 
                         />

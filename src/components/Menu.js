@@ -1,12 +1,28 @@
 import { Link } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { getTodayHabits } from '../services/trackitApi';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import styled from 'styled-components';
 import 'react-circular-progressbar/dist/styles.css';
-import { useContext } from 'react';
 import UserContext from '../contexts/UserContext';
 
 export default function Menu() {
-    const { todayHabitsList } = useContext(UserContext);
+    const { token } = useContext(UserContext);
+    const { todayHabitsList, setTodayHabitsList } = useContext(UserContext);
+    const { reload } = useContext(UserContext);
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    };
+
+    useEffect(() => {
+        getTodayHabits(config)
+            .then(resp => {
+                setTodayHabitsList(resp.data);
+            });
+    }, [reload]);
 
     const habitsChecked = todayHabitsList.filter(check => {
         if(check.done === true) {
@@ -39,7 +55,9 @@ export default function Menu() {
                 </Link>
             </div>
 
-            <h3>Histórico</h3>
+            <Link to={"/historico"}>
+                <h3>Histórico</h3>
+            </Link>
         </Container>
     );
 }
