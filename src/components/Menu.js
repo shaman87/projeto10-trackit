@@ -30,7 +30,11 @@ export default function Menu() {
         }
     });
 
-    const percentage = (habitsChecked.length / todayHabitsList.length) * 100;
+    let percentage = (habitsChecked.length / todayHabitsList.length) * 100;
+
+    if(isNaN(percentage)) {
+        percentage = 0;
+    }
 
     return (
         <Container>

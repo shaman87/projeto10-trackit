@@ -9,7 +9,7 @@ import UserContext from "../contexts/UserContext";
 
 export default function LoginScreen() {
     const navigate = useNavigate();
-    const { token, setToken} = useContext(UserContext);
+    const { setToken} = useContext(UserContext);
     const { userIcon, setUserIcon } = useContext(UserContext);
     const [disabled, setDisabled] = useState(false);
     const [form, setForm] = useState({
@@ -31,9 +31,8 @@ export default function LoginScreen() {
 
         postLogin(form)
             .then(resp => {
-                console.log(resp.data);
                 setDisabled(false);
-                //setToken(resp.data.token);
+                setToken(resp.data.token);
                 setUserIcon(resp.data.image);
                 navigate("/hoje");
             })

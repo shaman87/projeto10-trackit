@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getTodayHabits } from "../services/trackitApi";
 
 import styled from "styled-components";
@@ -10,11 +11,12 @@ import dayjs from 'dayjs';
 
 export default function TodayScreen() {
     const dayjs = require('dayjs');
-    const { token, setToken } = useContext(UserContext);
+    const { token } = useContext(UserContext);
     const { userIcon, setUserIcon } = useContext(UserContext);
     const { todayHabitsList, setTodayHabitsList } = useContext(UserContext);
-    const { reload, setReload } = useContext(UserContext);
-    
+    const { reload } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -34,7 +36,13 @@ export default function TodayScreen() {
         getTodayHabits(config)
             .then(resp => {
                 setTodayHabitsList(resp.data);
+            })
+            .catch(resp => {
+                if(resp.response.data.message === "Campo Header inválido!") {
+                    navigate("/");
+                }
             });
+            
     }, [reload]);
 
     const habitsCheckedList = todayHabitsList.filter(check => {
@@ -49,6 +57,7 @@ export default function TodayScreen() {
     return (
         <>
             <Header userIcon={userIcon} />
+
             <TodayContent>
                 <div>
                     <h2>{dayjs().format("dddd, DD/MM")}</h2>
@@ -73,6 +82,7 @@ export default function TodayScreen() {
                     ))}
                 </div>
             </TodayContent>
+
             <Menu />
         </>
     );

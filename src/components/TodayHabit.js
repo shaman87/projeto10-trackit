@@ -18,21 +18,17 @@ export default function TodayHabit({ habitId, habitName, habitDone, habitCurrent
     function selectHabit() {
         if(habitDone === false) {
             postTodayHabitsCheck(habitId, config)
-                .then(resp => {
-                    console.log(resp);
+                .then(resp => {                    
                     setReload(!reload);
                 })
-                .catch(resp => {
-                    console.log(resp);
+                .catch(resp => {                    
                 });
         } else {
             postTodayHabitsUncheck(habitId, config)
-                .then(resp => {
-                    console.log(resp);
+                .then(resp => {                    
                     setReload(!reload);
                 })
-                .catch(resp => {
-                    console.log(resp);
+                .catch(resp => {                    
                 });
         }
     }

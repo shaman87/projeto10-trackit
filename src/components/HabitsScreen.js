@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getHabits, postHabits } from "../services/trackitApi";
 import { ThreeDots } from  'react-loader-spinner';
 
@@ -18,6 +19,7 @@ export default function HabitsScreen() {
     const [showForm, setShowForm] = useState("hidden");
     const [selectedWeekDays, setSelectedWeekDays] = useState([]);
     const [weekdays, setWeekdays] = useState([0, 1, 2, 3, 4, 5, 6]);
+    const navigate = useNavigate();
     
     const [form, setForm] = useState({
         name: "",
@@ -33,9 +35,14 @@ export default function HabitsScreen() {
     useEffect(() => {
         getHabits(config)
             .then(resp => {
-                console.log(resp.data);
                 setHabitsList(resp.data);
+            })
+            .catch(resp => {
+                if(resp.response.data.message === "Campo Header inválido!") {
+                    navigate("/");
+                }
             });
+            
     }, [reload]);
 
     function handleForm(event) {
@@ -65,7 +72,6 @@ export default function HabitsScreen() {
                     setReload(!reload);
                 })
                 .catch(resp => {
-                    console.log(resp);
                     setDisabled(false);
                     alert("Erro! Tente novamente");
                 });

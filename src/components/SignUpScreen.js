@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { postSignUp } from "../services/trackitApi";
 import { ThreeDots } from  'react-loader-spinner'
 import styled from "styled-components";
 import logo from "../assets/img/logo.png";
 
-export default function SignUp() {
+export default function SignUpScreen() {
     const [disabled, setDisabled] = useState(false);
+    const navigate = useNavigate();
     const [form, setForm] = useState({
         email: "",
         name: "", 
@@ -27,16 +29,18 @@ export default function SignUp() {
         
         setDisabled(true);
 
-        postSignUp(form).then(resp => {
-            console.log(resp.data);
-            console.log(form);
-            setDisabled(false);
-        })
-
-        postSignUp(form).catch(resp => {
-            setDisabled(false);
-            setTimeout(() => {alert(resp.response.data.message)}, 0);
-        })
+        postSignUp(form)
+            .then(resp => {
+                console.log(resp.data);
+                console.log(form);
+                setDisabled(false);
+                navigate("/");
+            })
+            .catch(resp => {
+                console.log(resp.data);
+                setDisabled(false);
+                setTimeout(() => {alert(resp.response.data.message)}, 0);
+            })
     }
 
     return (

@@ -14,7 +14,7 @@ import Menu from "./components/Menu";
 
 export default function App() {
     const [reload, setReload] = useState(false);
-    const [token, setToken] = useState("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDU1NiwiaWF0IjoxNjU5ODQ2ODgyfQ.kfPIi294qkfQQppkX7UKB_q7n8pSyuWxIF41HQzqIvM");
+    const [token, setToken] = useState("");
     const [userIcon, setUserIcon] = useState("");
     const [habitsList, setHabitsList] = useState([]);
     const [todayHabitsList, setTodayHabitsList] = useState([]);
@@ -35,7 +35,6 @@ export default function App() {
             }}>
                 <GlobalStyle />
                 <BrowserRouter>
-                    <Header />
                     <Routes>
                         <Route path="/" element={<LoginScreen />} />
                         <Route path="/cadastro" element={<SignUpScreen />} />
@@ -43,7 +42,6 @@ export default function App() {
                         <Route path="/hoje" element={<TodayScreen />} />
                         <Route path="/historico" element={<HistoryScreen />} />
                     </Routes>
-                    <Menu />
                 </BrowserRouter>
             </UserContext.Provider>
         </>
